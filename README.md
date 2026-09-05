@@ -1,48 +1,78 @@
 # Odeus
 
-Odeus is a small Python utility that creates dated Git commits in a repository
-and pushes them to its configured remote. It is intended for personal testing
-of Git history and contribution activity. Use it only with repositories you
-own or are authorized to modify.
+Odeus is a small Python utility for creating dated Git commits in a repository
+you own or are authorized to modify. It appends a line to a file, creates
+commits with dates from the previous year, and pushes them to that repository's
+configured remote.
+
+The public `odeus` repository contains the tool. Each user supplies a separate
+local clone of their own target repository when the program runs.
 
 ## Requirements
 
 - Python 3
 - Git installed and configured
-- A local Git repository with a remote
+- Permission to push to the target repository
+- A target repository cloned to your computer
 
-## Setup
+## Install the tool
 
-For a dedicated repository, create a repository named `odeus` on GitHub and
-clone it:
+Clone this repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/odeus.git
+git clone https://github.com/vatsalkoriya/odeus.git
 cd odeus
 ```
 
-Copy `main.py` into the repository, or run it from this project while passing
-the repository path when prompted.
+## Prepare your target repository
 
-## Run
+Clone a repository that you own or have permission to update. Replace the URL
+with your own repository URL:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+```
+
+For example:
+
+```bash
+git clone https://github.com/vatsalkoriya/odeus-trial-auto.git
+```
+
+Make sure Git authentication works and that the target repository has a
+configured `origin` remote.
+
+## Run Odeus
+
+From the `odeus` folder, run:
 
 ```bash
 python main.py
 ```
 
-The program asks for:
+Answer the prompts:
 
-1. The number of commits (default: `20`)
-2. The local repository path (default: current directory)
-3. The file to update (default: `data.txt`)
+1. **Number of commits** — defaults to `20`
+2. **Repository path** — the local folder of your target repository, not its
+   GitHub URL
+3. **File to update** — defaults to `data.txt`
 
-Each commit appends one line to the selected file, uses a random date from
-the previous 365 days, and is pushed with `git push`.
+Example:
 
-## Notes
+```text
+Number of commits [20]: 3
+Repository path [.]: C:\Users\YourName\projects\my-repository
+File to update [data.txt]:
+```
 
-- Make sure the selected repository has a configured remote and valid Git
-  credentials before running the program.
-- GitHub may not count commits unless the commit email is associated with
-  your account and the commits are pushed to a branch GitHub recognizes.
-- This tool does not replace genuine project work or contributions.
+The program appends one line to the selected file, creates each commit, and
+pushes the commits to the target repository with `git push`.
+
+## Important notes
+
+- Do not enter a URL at the repository-path prompt. Clone the repository first
+  and enter its local folder path.
+- Use only repositories you own or are authorized to modify.
+- GitHub may count commits only when the commit email is associated with your
+  GitHub account and the commits are pushed to a recognized branch.
+- Backdated commits should not be used to misrepresent real work or activity.
